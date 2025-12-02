@@ -189,7 +189,7 @@ When referencing KCM in research or other projects, use:
 
 Saurabh Misra (Karnav). “Karnav Collapse Model (KCM).” https://github.com/<your-repo>
 
-(Add DOI once released.)
+(Add DOI once released.).
 
 ---
 
