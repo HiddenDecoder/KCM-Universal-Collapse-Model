@@ -1,0 +1,38 @@
+[
+  {
+    "id": "startup-risk",
+    "title": "High-growth vs stable-growth startup decision",
+    "defaultText": "A startup must choose between fast, risky scaling or slower but more stable growth.",
+    "recommended": {
+      "meaningClarity": 70,
+      "routeOptions": 60,
+      "trustScore": 65,
+      "timePressure": 50,
+      "instabilityLevel": 55
+    }
+  },
+  {
+    "id": "career-switch",
+    "title": "Career switch vs staying in current job",
+    "defaultText": "A person is considering whether to leave a secure job for a high-uncertainty opportunity.",
+    "recommended": {
+      "meaningClarity": 65,
+      "routeOptions": 55,
+      "trustScore": 60,
+      "timePressure": 45,
+      "instabilityLevel": 50
+    }
+  },
+  {
+    "id": "binary-choice",
+    "title": "Simple binary technical decision",
+    "defaultText": "A system must choose between two technical configurations with clear constraints.",
+    "recommended": {
+      "meaningClarity": 80,
+      "routeOptions": 30,
+      "trustScore": 80,
+      "timePressure": 30,
+      "instabilityLevel": 35
+    }
+  }
+]
