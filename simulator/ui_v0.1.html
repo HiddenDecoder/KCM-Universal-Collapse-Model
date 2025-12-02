@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KCM Collapse Simulator v0.1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px;
+      line-height: 1.5;
+    }
+    h1, h2 {
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+    textarea, input[type="range"], input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 8px;
+    }
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .slider-row span.value {
+      min-width: 32px;
+      text-align: right;
+      font-size: 0.85rem;
+    }
+    button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #111;
+      font-weight: 600;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      margin-top: 4px;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .output {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid #aaa;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+    .pill-crit {
+      border-color: #b30000;
+    }
+    .pill-stable {
+      border-color: #007700;
+    }
+    .small {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>KCM Collapse Simulator v0.1</h1>
+  <div class="subtitle">
+    Karnav Collapse Model • 0–1–C • C-State • KRP (MR–RR–TR–TmR)
+  </div>
+
+  <div class="card">
+    <h2>1. Input (Wave-State – “1”)</h2>
+    <label for="signalInput">Signal / Situation / Question</label>
+    <textarea id="signalInput" placeholder="Example: A startup must choose between fast growth with high risk or slow growth with stability..."></textarea>
+
+    <div class="small">
+      Yeh tumhara **wave-state (1)** hai — raw situation before KCM collapse.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. KRP Parameters</h2>
+
+    <div class="slider-row">
+      <div style="flex:1;">
+        <label for="meaningClarity">MeaningRoot (MR) – Clarity</label>
+        <input type="range" id="meaningClarity" min="0" max="100" value="60"
+               oninput="KCM_UI.updateValue('meaningClarityValue', this.value)">
+      </div>
+      <span class="value" id="meaningClarityValue">60</span>
+    </div>
+
+    <div class="slider-row">
+      <div style="flex:1;">
+        <label for="routeOptions">RouteRoot (RR) – Options Count / Branching</label>
+        <input type="range" id="routeOptions" min="0" max="100" value="50"
+               oninput="KCM_UI.updateValue('routeOptionsValue', this.value)">
+      </div>
+      <span class="value" id="routeOptionsValue">50</span>
+    </div>
+
+    <div class="slider-row">
+      <div style="flex:1;">
+        <label for="trustScore">TrustRoot (TR) – Structural Reliability</label>
+        <input type="range" id="trustScore" min="0" max="100" value="65"
+               oninput="KCM_UI.updateValue('trustScoreValue', this.value)">
+      </div>
+      <span class="value" id="trustScoreValue">65</span>
+    </div>
+
+    <div class="slider-row">
+      <div style="flex:1;">
+        <label for="timePressure">TimeRoot (TmR) – Time Pressure</label>
+        <input type="range" id="timePressure" min="0" max="100" value="40"
+               oninput="KCM_UI.updateValue('timePressureValue', this.value)">
+      </div>
+      <span class="value" id="timePressureValue">40</span>
+    </div>
+
+    <div class="slider-row">
+      <div style="flex:1;">
+        <label for="instabilityLevel">Instability / Contradiction Level</label>
+        <input type="range" id="instabilityLevel" min="0" max="100" value="55"
+               oninput="KCM_UI.updateValue('instabilityLevelValue', this.value)">
+      </div>
+      <span class="value" id="instabilityLevelValue">55</span>
+    </div>
+
+    <div class="small">
+      Ye paanch sliders KRP + instability ko represent karte hain:
+      MR (meaning), RR (paths), TR (integrity), TmR (time), Instability (contradiction).
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. Collapse (C-State) Simulation</h2>
+    <button id="simulateBtn" onclick="KCM_UI.runSimulation()">Simulate Collapse (1 → C → 0)</button>
+    <div class="small" style="margin-top:6px;">
+      Button दबाने पर: input **KRP roots** se guzar ke **C-State** me collapse karega,  
+      aur ek **center-aligned output** + explanation milegi.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. Output (Center-State – “0”)</h2>
+    <div id="collapseSummary" class="output"></div>
+  </div>
+
+  <div class="card">
+    <h2>5. KCM Notes</h2>
+    <div class="small">
+      <span class="pill pill-crit">Wave (1)</span>
+      <span class="pill">C-State (Collapse)</span>
+      <span class="pill pill-stable">Center (0)</span>
+      <br><br>
+      Ye simulator **KCM ka intuition demo** hai — research-grade math backend alag paper me diya gaya hai.
+    </div>
+  </div>
+
+  <script src="collapse_demo.js"></script>
+</body>
+</html>
